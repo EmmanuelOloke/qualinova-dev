@@ -6,7 +6,7 @@ import {
 import MetricCard from '@/components/molecules/MetricCard/metricCard';
 import CertificateList from '@/components/organisms/CertificateList/certificateList';
 import CertificateActivityChart from '@/components/molecules/CertificateActivityChart/certificateActivityChart';
-import QuickActions, { QuickActionItem } from '@/components/organisms/QuickActions/quickActions';
+import QuickActions from '@/components/organisms/QuickActions/quickActions';
 import { dummyData } from '@/data/dashboardData';
 
 

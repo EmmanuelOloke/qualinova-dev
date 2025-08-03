@@ -51,7 +51,7 @@ const AssignedCertificateRow = ({ certificate }: { certificate: AssignedCertific
 
 const CertifierPanel = () => {
   const [tab, setTab] = useState<'assigned' | 'templates'>('assigned');
-  const [certs, setCerts] = useState(initialAssignedCertificates);
+  const [certs, setCerts] = useState<AssignedCertificate[]>([]);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('All Statuses');
   const [dropdownOpen, setDropdownOpen] = useState(false);
@@ -62,6 +62,7 @@ const CertifierPanel = () => {
 
   // Close dropdown on outside click
   useEffect(() => {
+    setCerts(initialAssignedCertificates)
     if (!dropdownOpen) return;
     const handleClick = (e: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
