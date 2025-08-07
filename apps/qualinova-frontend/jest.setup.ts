@@ -21,6 +21,9 @@ jest.mock('lucide-react', () => ({
   Clock: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Clock' }, 'Clock'),
   FileX: (props: any) => React.createElement('div', { ...props, 'data-icon': 'FileX' }, 'FileX'),
   FilePlus: (props: any) => React.createElement('div', { ...props, 'data-icon': 'FilePlus' }, 'FilePlus'),
+  MessageCircle: (props: any) => React.createElement('div', { ...props, 'data-icon': 'MessageCircle' }, 'MessageCircle'),
+  Mail: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Mail' }, 'Mail'),
+  Phone: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Phone' }, 'Phone'),
 }));
 
 

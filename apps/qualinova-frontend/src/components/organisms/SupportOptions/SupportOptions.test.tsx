@@ -17,7 +17,6 @@ describe("SupportOptions", () => {
       title: "Send Ticket",
       description: "Create ticket",
       buttonText: "Create Ticket",
-      contactInfo: "support@example.com",
       onAction: jest.fn(),
     },
   ];
@@ -31,9 +30,10 @@ describe("SupportOptions", () => {
     expect(screen.getByText("Create ticket")).toBeInTheDocument();
   });
 
-  it("renders contact info when provided", () => {
+  it("renders support card buttons", () => {
     render(<SupportOptions options={mockOptions} />);
-    expect(screen.getByText("support@example.com")).toBeInTheDocument();
+    expect(screen.getByText("Start Chat")).toBeInTheDocument();
+    expect(screen.getByText("Create Ticket")).toBeInTheDocument();
   });
 
   it("applies grid layout classes", () => {
