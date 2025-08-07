@@ -8,14 +8,6 @@ jest.mock('next/navigation', () => ({
   usePathname: jest.fn(),
 }));
 
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => {
-    // Render a simple img tag for testing
-    return <img {...props} />;
-  },
-}));
-
 const mockUsePathname = usePathname as jest.MockedFunction<typeof usePathname>;
 
 describe('Button', () => {

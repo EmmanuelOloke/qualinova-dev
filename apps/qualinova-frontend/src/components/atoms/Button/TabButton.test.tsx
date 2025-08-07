@@ -14,7 +14,7 @@ describe("TabButton", () => {
   it("applies active styles when isActive is true", () => {
     render(<TabButton isActive={true}>Active Tab</TabButton>)
     const button = screen.getByText("Active Tab")
-    expect(button).toHaveClass("bg-blue-600")
+    expect(button).toHaveClass("bg-[#020817]", "text-white")
   })
 
   it("applies inactive styles when isActive is false", () => {
@@ -34,5 +34,11 @@ describe("TabButton", () => {
   it("applies custom className", () => {
     render(<TabButton className="custom-class">Custom Tab</TabButton>)
     expect(screen.getByText("Custom Tab")).toHaveClass("custom-class")
+  })
+
+  it("applies blue theme styles when theme is blue", () => {
+    render(<TabButton isActive={true} theme="blue">Blue Active Tab</TabButton>)
+    const button = screen.getByText("Blue Active Tab")
+    expect(button).toHaveClass("bg-[#2563EB]", "text-[#0F172A]")
   })
 })

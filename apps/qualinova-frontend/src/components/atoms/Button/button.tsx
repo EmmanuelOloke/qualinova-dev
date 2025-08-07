@@ -43,7 +43,6 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           variants[variant],
           fullWidth && "w-full",
           (disabled || isLoading) && "opacity-50 cursor-not-allowed",
-          "cursor-pointer",
           className
         )}
         disabled={disabled || isLoading}
