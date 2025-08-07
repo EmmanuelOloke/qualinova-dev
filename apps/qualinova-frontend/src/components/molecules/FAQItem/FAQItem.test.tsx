@@ -35,9 +35,9 @@ describe("FAQItem", () => {
 
   it("shows correct chevron icon based on open state", () => {
     const { rerender } = render(<FAQItem {...defaultProps} isOpen={false} />);
-    expect(document.querySelector(".lucide-chevron-down")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="ChevronDown"]')).toBeInTheDocument();
 
     rerender(<FAQItem {...defaultProps} isOpen={true} />);
-    expect(document.querySelector(".lucide-chevron-up")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="ChevronUp"]')).toBeInTheDocument();
   });
 });

@@ -10,6 +10,7 @@ jest.mock('lucide-react', () => ({
   CircleCheckBig: (props: any) => React.createElement('div', { ...props, 'data-icon': 'CircleCheckBig' }, 'CircleCheckBig'),
   CircleX: (props: any) => React.createElement('div', { ...props, 'data-icon': 'CircleX' }, 'CircleX'),
   Clock4: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Clock4' }, 'Clock4'),
+  ChevronUp: (props: any) => React.createElement('div', { ...props, 'data-icon': 'ChevronUp' }, 'ChevronUp'),
   ChevronDown: (props: any) => React.createElement('div', { ...props, 'data-icon': 'ChevronDown' }, 'ChevronDown'),
   ChevronRight: (props: any) => React.createElement('div', { ...props, 'data-icon': 'ChevronRight' }, 'ChevronRight'),
   Menu: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Menu' }, 'Menu'),
