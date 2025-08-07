@@ -32,11 +32,32 @@ describe('CertifierDashboard', () => {
     render(<CertifierDashboard />);
     const dropdownButton = screen.getByRole('button', { name: /all statuses/i });
     fireEvent.click(dropdownButton);
-    expect(screen.getByText('Verified')).toBeInTheDocument();
-    expect(screen.getByText('Pending')).toBeInTheDocument();
-    expect(screen.getByText('Expired')).toBeInTheDocument();
-    fireEvent.click(screen.getByText('Pending'));
-    expect(screen.queryByText('Verified')).not.toBeInTheDocument();
+    
+    // Find dropdown options specifically by their role as buttons within the dropdown
+    const verifiedOption = screen.getAllByRole('button').find(button => 
+      button.textContent === 'Verified' && button.className.includes('w-full text-left')
+    );
+    const pendingOption = screen.getAllByRole('button').find(button => 
+      button.textContent === 'Pending' && button.className.includes('w-full text-left')
+    );
+    const expiredOption = screen.getAllByRole('button').find(button => 
+      button.textContent === 'Expired' && button.className.includes('w-full text-left')
+    );
+    
+    expect(verifiedOption).toBeInTheDocument();
+    expect(pendingOption).toBeInTheDocument();
+    expect(expiredOption).toBeInTheDocument();
+    
+    // Click the Pending option
+    fireEvent.click(pendingOption!);
+    
+    // After selecting Pending, the dropdown should close and the button text should update
     expect(dropdownButton).toHaveTextContent('Pending');
+    
+    // The dropdown options should no longer be visible (dropdown is closed)
+    const closedVerifiedOption = screen.queryAllByRole('button').find(button => 
+      button.textContent === 'Verified' && button.className.includes('w-full text-left')
+    );
+    expect(closedVerifiedOption).toBeUndefined();
   });
 });
