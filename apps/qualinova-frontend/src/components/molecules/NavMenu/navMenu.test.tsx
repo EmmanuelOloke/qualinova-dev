@@ -29,18 +29,13 @@ jest.mock('../../atoms/Button/Button.tsx', () => {
   };
 });
 
-jest.mock('lucide-react', () => ({
-  X: () => <div data-testid="x-icon" />,
-  Menu: () => <div data-testid="menu-icon" />,
-}));
-
 describe('NavMenu', () => {
   it('renders desktop navigation by default', () => {
     render(<NavMenu />);
 
-    // Check if all navigation links are present
+    // Check if all navigation links are present (now includes Help link)
     const navLinks = screen.getAllByTestId('nav-link');
-    expect(navLinks).toHaveLength(5);
+    expect(navLinks).toHaveLength(6);
 
     // Check if desktop buttons are present
     const buttons = screen.getAllByTestId('button');
@@ -51,14 +46,14 @@ describe('NavMenu', () => {
 
   it('shows hamburger menu icon on mobile', () => {
     render(<NavMenu />);
-    expect(screen.getByTestId('menu-icon')).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Menu"]')).toBeInTheDocument();
   });
 
   it('toggles mobile menu when hamburger is clicked', () => {
     render(<NavMenu />);
 
-    // Get the mobile menu button specifically
-    const menuButton = screen.getByTestId('menu-icon').parentElement as HTMLElement;
+    // Get the mobile menu button using the correct test id
+    const menuButton = screen.getByTestId('mobile-menu-button');
 
     // Initially menu is closed
     const mobileMenu = screen.queryByTestId('mobile-menu');
@@ -69,7 +64,7 @@ describe('NavMenu', () => {
 
     // Menu should be open
     expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
-    expect(screen.getByTestId('x-icon')).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="X"]')).toBeInTheDocument();
 
     // Click again to close
     fireEvent.click(menuButton);
@@ -79,7 +74,7 @@ describe('NavMenu', () => {
   it('renders correct navigation links', () => {
     render(<NavMenu />);
 
-    const expectedLinks = ['/', '/dashboard', '/create-certificate', '/verify', '/certificate'];
+    const expectedLinks = ['/', '/dashboard', '/create-certificate', '/verify', '/certificate', '/help'];
     const navLinks = screen.getAllByTestId('nav-link');
 
     navLinks.forEach((link, index) => {
@@ -98,21 +93,26 @@ describe('NavMenu', () => {
   it('handles mobile menu state correctly', () => {
     render(<NavMenu />);
 
-    // Get the mobile menu button specifically
-    const menuButton = screen.getByTestId('menu-icon').parentElement as HTMLElement;
+    // Get the mobile menu button using the correct test id
+    const menuButton = screen.getByTestId('mobile-menu-button');
 
-    // Initially mobile menu is closed
-    expect(screen.queryByTestId('x-icon')).not.toBeInTheDocument();
+    // Initially mobile menu is closed and shows Menu icon
+    expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Menu"]')).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="X"]')).not.toBeInTheDocument();
 
     // Open mobile menu
     fireEvent.click(menuButton);
 
-    // Check if mobile menu content is visible
-    expect(screen.getByTestId('x-icon')).toBeInTheDocument();
+    // Check if mobile menu content is visible and shows X icon
+    expect(screen.getByTestId('mobile-menu')).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="X"]')).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Menu"]')).not.toBeInTheDocument();
 
     // Close mobile menu
-    const closeButton = screen.getByTestId('x-icon').parentElement as HTMLElement;
-    fireEvent.click(closeButton);
-    expect(screen.queryByTestId('x-icon')).not.toBeInTheDocument();
+    fireEvent.click(menuButton);
+    expect(screen.queryByTestId('mobile-menu')).not.toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Menu"]')).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="X"]')).not.toBeInTheDocument();
   });
 });
