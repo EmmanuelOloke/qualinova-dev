@@ -24,6 +24,7 @@ jest.mock('lucide-react', () => ({
   MessageCircle: (props: any) => React.createElement('div', { ...props, 'data-icon': 'MessageCircle' }, 'MessageCircle'),
   Mail: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Mail' }, 'Mail'),
   Phone: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Phone' }, 'Phone'),
+  Award: (props: any) => React.createElement('div', { ...props, 'data-icon': 'Award' }, 'Award'),
 }));
 
 
@@ -84,4 +85,24 @@ jest.mock('next/image', () => ({
     default: ({ src, alt, ...props }: any) => {
         return React.createElement('img', { src, alt, ...props });
     },
+}));
+
+// Mock Recharts
+jest.mock('recharts', () => ({
+  ResponsiveContainer: ({ children }: any) => React.createElement('div', { 'data-testid': 'responsive-container' }, children),
+  LineChart: ({ children }: any) => React.createElement('div', { 'data-testid': 'line-chart' }, children),
+  Line: () => React.createElement('div', { 'data-testid': 'line' }),
+  XAxis: () => React.createElement('div', { 'data-testid': 'x-axis' }),
+  YAxis: () => React.createElement('div', { 'data-testid': 'y-axis' }),
+  CartesianGrid: () => React.createElement('div', { 'data-testid': 'cartesian-grid' }),
+  Tooltip: () => React.createElement('div', { 'data-testid': 'tooltip' }),
+  Legend: () => React.createElement('div', { 'data-testid': 'legend' }),
+  ReferenceLine: () => React.createElement('div', { 'data-testid': 'reference-line' }),
+  Area: () => React.createElement('div', { 'data-testid': 'area' }),
+  AreaChart: ({ children }: any) => React.createElement('div', { 'data-testid': 'area-chart' }, children),
+  Bar: () => React.createElement('div', { 'data-testid': 'bar' }),
+  BarChart: ({ children }: any) => React.createElement('div', { 'data-testid': 'bar-chart' }, children),
+  PieChart: ({ children }: any) => React.createElement('div', { 'data-testid': 'pie-chart' }, children),
+  Pie: () => React.createElement('div', { 'data-testid': 'pie' }),
+  Cell: () => React.createElement('div', { 'data-testid': 'cell' }),
 }));
