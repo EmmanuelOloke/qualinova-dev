@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
 import CertificateList from './certificateList';
 import { Certificate } from '@/data/dashboardData';
-jest.mock('@/components/molecules/RecentCertificate/recentCertificate', () => ({
+jest.mock('../../molecules/RecentCertificate/recentCertificate.tsx', () => ({
   __esModule: true,
-  default: ({ cert }: any) => <div>{cert.name}{cert.company}</div>,
+  default: ({cert}: any) => (
+    <div>
+      <span>{cert.name}</span>
+      <span>{cert.company}</span>
+    </div>
+  )
 }));
 const certificates: Certificate[] = [
   { name: 'Cert 1', company: 'Company A', date: '2023-01-01', status: 'Verified' },

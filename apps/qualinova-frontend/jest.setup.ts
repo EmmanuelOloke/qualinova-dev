@@ -17,6 +17,9 @@ jest.mock('lucide-react', () => ({
   PlusCircle: () => 'PlusCircle',
   Shield: () => 'Shield',
   X: () => 'X',
+  FileCheck: () => 'FileCheck',
+  Clock: () => 'Clock',
+  FileX: () => 'FileX',
 }));
 
 jest.mock('react-hook-form', () => ({
