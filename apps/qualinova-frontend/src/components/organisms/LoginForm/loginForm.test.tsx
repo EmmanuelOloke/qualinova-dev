@@ -1,5 +1,5 @@
 import React from "react";
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
 import LoginForm from "@/components/organisms/LoginForm/loginForm";
@@ -10,21 +10,6 @@ jest.mock("next/navigation", () => ({
   useRouter: () => ({
     push: mockPush,
   }),
-}));
-
-// Mock Next.js Image component
-jest.mock("next/image", () => ({
-  __esModule: true,
-  default: ({ src, alt, width, height, className }: any) => (
-    <img
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      className={className}
-      data-testid="github-icon"
-    />
-  ),
 }));
 
 // Mock Next.js Link component
@@ -40,32 +25,6 @@ jest.mock("next/link", () => ({
     </a>
   ),
 }));
-
-// Mock react-hook-form
-jest.mock('react-hook-form', () => {
-  let formErrors = {};
-  return {
-    useForm: () => ({
-      register: () => ({}),
-      handleSubmit: (cb: any) => (e: any) => {
-        e?.preventDefault?.();
-        cb({ 
-          email: "test@example.com", 
-          password: "validPassword123", 
-          rememberMe: false 
-        });
-      },
-      formState: {
-        errors: formErrors,
-        isValid: false,
-      },
-      // Helper function to set errors in tests
-      __setErrors: (errors: any) => {
-        formErrors = errors;
-      }
-    }),
-  };
-});
 
 // Create a wrapper component with necessary providers
 const renderWithProviders = (ui: React.ReactElement) => {
@@ -200,9 +159,9 @@ describe("LoginForm Component", () => {
 
   describe("Form Validation", () => {
     it("shows validation errors for empty form submission", async () => {
-
-      const mockUseForm = require('react-hook-form').useForm();
-      mockUseForm.__setErrors({
+      const { useForm } = await import('react-hook-form');
+      const mockForm = (useForm as jest.Mock)();
+      mockForm.__setErrors({
         email: { message: "Email is required" },
         password: { message: "Password is required" }
       });
@@ -224,46 +183,54 @@ describe("LoginForm Component", () => {
     });
 
     it("shows error when only email field is empty", async () => {
-    // Set up mock to only show email error
-    const mockUseForm = require('react-hook-form').useForm();
-    mockUseForm.__setErrors({
-      email: { message: "Email is required" }
+      // Set up mock to only show email error
+      const { useForm } = await import('react-hook-form');
+      const mockForm = (useForm as jest.Mock)();
+      mockForm.__setErrors({
+        email: { message: "Email is required" }
+      });
+
+      renderWithProviders(<LoginForm />);
+      
+      await user.click(screen.getByTestId("submit-button"));
+
+      await waitFor(() => {
+        expect(screen.getByTestId("error-message")).toHaveTextContent("Email is required");
+        // Verify only one error is shown
+        expect(screen.queryAllByTestId("error-message")).toHaveLength(1);
+      });
     });
 
-    renderWithProviders(<LoginForm />);
-    
-    await user.click(screen.getByTestId("submit-button"));
+    it("shows error when only password field is empty", async () => {
+      // Set up mock to only show password error
+      const { useForm } = await import('react-hook-form');
+      const mockForm = (useForm as jest.Mock)();
+      mockForm.__setErrors({
+        email: { message: "Password is required" }
+      });
 
-    await waitFor(() => {
-      expect(screen.getByTestId("error-message")).toHaveTextContent("Email is required");
-      // Verify only one error is shown
-      expect(screen.queryAllByTestId("error-message")).toHaveLength(1);
+      renderWithProviders(<LoginForm />);
+      
+      await user.click(screen.getByTestId("submit-button"));
+
+      await waitFor(() => {
+        expect(screen.getByTestId("error-message")).toHaveTextContent("Password is required");
+        // Verify only one error is shown
+        expect(screen.queryAllByTestId("error-message")).toHaveLength(1);
+      });
     });
-  });
-
-  it("shows error when only password field is empty", async () => {
-    // Set up mock to only show password error
-    const mockUseForm = require('react-hook-form').useForm();
-    mockUseForm.__setErrors({
-      email: { message: "Password is required" }
-    });
-
-    renderWithProviders(<LoginForm />);
-    
-    await user.click(screen.getByTestId("submit-button"));
-
-    await waitFor(() => {
-      expect(screen.getByTestId("error-message")).toHaveTextContent("Password is required");
-      // Verify only one error is shown
-      expect(screen.queryAllByTestId("error-message")).toHaveLength(1);
-    });
-  });
 
     it("allows submission with valid data", async () => {
-      const mockUseForm = require('react-hook-form').useForm();
-      mockUseForm.__setErrors({
+      const { useForm } = await import('react-hook-form');
+      const mockForm = (useForm as jest.Mock)();
+      mockForm.__setErrors({
         email: { message: "" },
         password: { message: "" }
+      });
+      mockForm.__setFormData({
+        email: "test@example.com",
+        password: "validPassword123",
+        rememberMe: false
       });
 
       renderWithProviders(<LoginForm />);
