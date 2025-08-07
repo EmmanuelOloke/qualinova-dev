@@ -6,18 +6,18 @@ describe("SupportIcon", () => {
   it("renders chat icon correctly", () => {
     render(<SupportIcon type="chat" />);
     expect(
-      document.querySelector(".lucide-message-circle")
+      document.querySelector('[data-icon="MessageCircle"]')
     ).toBeInTheDocument();
   });
 
   it("renders email icon correctly", () => {
     render(<SupportIcon type="email" />);
-    expect(document.querySelector(".lucide-mail")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Mail"]')).toBeInTheDocument();
   });
 
   it("renders phone icon correctly", () => {
     render(<SupportIcon type="phone" />);
-    expect(document.querySelector(".lucide-phone")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Phone"]')).toBeInTheDocument();
   });
 
   it("applies correct color classes", () => {

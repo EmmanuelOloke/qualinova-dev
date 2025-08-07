@@ -6,7 +6,7 @@ import { SearchInput } from "./SearchInput";
 
 describe("SearchInput", () => {
   it("renders with default placeholder", () => {
-    render(<SearchInput />);
+    render(<SearchInput placeholder="Buscar en la ayuda..." />);
     expect(
       screen.getByPlaceholderText("Buscar en la ayuda...")
     ).toBeInTheDocument();
@@ -21,7 +21,7 @@ describe("SearchInput", () => {
 
   it("calls onChange when input value changes", () => {
     const mockOnChange = jest.fn();
-    render(<SearchInput onChange={mockOnChange} />);
+    render(<SearchInput onChange={mockOnChange} placeholder="Buscar en la ayuda..." />);
 
     const input = screen.getByPlaceholderText("Buscar en la ayuda...");
     fireEvent.change(input, { target: { value: "test search" } });
@@ -36,6 +36,6 @@ describe("SearchInput", () => {
 
   it("has search icon", () => {
     render(<SearchInput />);
-    expect(document.querySelector(".lucide-search")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Search"]')).toBeInTheDocument();
   });
 });
