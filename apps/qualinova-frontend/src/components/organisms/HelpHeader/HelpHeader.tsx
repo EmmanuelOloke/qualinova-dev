@@ -7,6 +7,7 @@ interface HelpHeaderProps {
   title: string;
   subtitle: string;
   searchValue?: string;
+  placeholderText?: string;
   onSearchChange?: (value: string) => void;
 }
 
@@ -14,6 +15,7 @@ export const HelpHeader: React.FC<HelpHeaderProps> = ({
   title,
   subtitle,
   searchValue,
+  placeholderText,
   onSearchChange,
 }) => {
   return (
@@ -26,6 +28,7 @@ export const HelpHeader: React.FC<HelpHeaderProps> = ({
       </div>
       <SearchInput
         value={searchValue}
+        placeholder={placeholderText}
         onChange={onSearchChange}
         className="max-w-lg"
       />
