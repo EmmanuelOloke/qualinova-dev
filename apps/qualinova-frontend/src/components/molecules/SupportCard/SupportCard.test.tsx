@@ -29,13 +29,13 @@ describe("SupportCard", () => {
   it("renders correct icon for each type", () => {
     const { rerender } = render(<SupportCard {...defaultProps} type="chat" />);
     expect(
-      document.querySelector(".lucide-message-circle")
+      document.querySelector('[data-icon="MessageCircle"]')
     ).toBeInTheDocument();
 
     rerender(<SupportCard {...defaultProps} type="email" />);
-    expect(document.querySelector(".lucide-mail")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Mail"]')).toBeInTheDocument();
 
     rerender(<SupportCard {...defaultProps} type="phone" />);
-    expect(document.querySelector(".lucide-phone")).toBeInTheDocument();
+    expect(document.querySelector('[data-icon="Phone"]')).toBeInTheDocument();
   });
 });

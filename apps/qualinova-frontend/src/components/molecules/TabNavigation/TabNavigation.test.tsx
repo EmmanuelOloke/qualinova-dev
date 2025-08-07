@@ -25,7 +25,7 @@ describe("TabNavigation", () => {
       <TabNavigation tabs={mockTabs} activeTab="tab2" onTabChange={jest.fn()} />
     );
 
-    expect(screen.getByText("Tab 2")).toHaveClass("bg-blue-600");
+    expect(screen.getByText("Tab 2")).toHaveClass("bg-[#020817]", "text-white");
   });
 
   it("calls onTabChange when tab is clicked", () => {
