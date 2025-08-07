@@ -1,4 +1,5 @@
 import '@testing-library/jest-dom';
+import React from 'react';
 
 // Mock Lucide React icons
 jest.mock('lucide-react', () => ({
@@ -32,7 +33,7 @@ jest.mock('react-hook-form', () => ({
 // Global jest mock for Next Image
 jest.mock('next/image', () => ({
     __esModule: true,
-    default: ({ src, alt, ...props }) => {
-        return <img src={src} alt={alt} {...props} />;
+    default: ({ src, alt, ...props }: any) => {
+        return React.createElement('img', { src, alt, ...props });
     },
 }));
