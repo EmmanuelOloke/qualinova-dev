@@ -1,5 +1,6 @@
 module.exports = {
   root: true,
+  ignorePatterns: ['.eslintrc.js'],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     project: './tsconfig.json',
@@ -14,8 +15,7 @@ module.exports = {
   ],
   rules: {
     '@typescript-eslint/no-unused-vars': ['warn'],
-    '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: false }],
-    '@typescript-eslint/no-unused-vars': ['warn'],
+    '@typescript-eslint/no-unused-expressions': ['error', { allowShortCircuit: true }],
     '@typescript-eslint/no-explicit-any': 'off',
   },
 };
