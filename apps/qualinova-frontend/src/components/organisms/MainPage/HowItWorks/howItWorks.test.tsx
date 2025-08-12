@@ -172,7 +172,7 @@ describe('HowItWorks', () => {
 
         it('handles click events', () => {
             const mockClick = jest.fn();
-            const { rerender } = render(<button onClick={mockClick}>Test Button</button>);
+            render(<button onClick={mockClick}>Test Button</button>);
 
             const button = screen.getByText('Test Button');
             fireEvent.click(button);
@@ -261,7 +261,7 @@ describe('HowItWorks Integration', () => {
 
     it('handles component props correctly', () => {
         // Test ProcessStep component with different props
-        const { rerender } = render(<HowItWorks />);
+        render(<HowItWorks />);
 
         expect(screen.getByText('1')).toBeInTheDocument();
         expect(screen.getByText('2')).toBeInTheDocument();

@@ -20,7 +20,7 @@ const LoginForm = () => {
     const {
         register,
         handleSubmit,
-        formState: { errors, isValid },
+        formState: { errors },
     } = useForm<RegisterFormData>({
         resolver: zodResolver(loginFormSchema),
         mode: 'onChange',

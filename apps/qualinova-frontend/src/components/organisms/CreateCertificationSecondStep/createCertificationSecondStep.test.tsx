@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import CreateCertificationSecondStep from './createCertificationSecondStep';
 import userEvent from '@testing-library/user-event';
 
@@ -12,14 +12,15 @@ if (!HTMLFormElement.prototype.requestSubmit) {
 
 // Mock Input component
 jest.mock('../../atoms/Input/input.tsx', () => {
-    const React = require('react');
-    return React.forwardRef(({ label, error, ...props }: any, ref: any) => (
+    const MockInput = React.forwardRef(({ label, error, ...props }: any, ref: any) => (
         <div data-testid={`input-${label}`}>
             <label>{label}</label>
             <input ref={ref} {...props} />
             {error && <span data-testid="error">{error}</span>}
         </div>
     ));
+    MockInput.displayName = 'MockInput';
+    return MockInput;
 });
 
 // Mock Button component
@@ -28,14 +29,19 @@ jest.mock('../../atoms/Button/button.tsx', () => ({
 }));
 
 // Mock StepIndicator
-jest.mock('../../molecules/StepIndicator/stepIndicator.tsx', () => (props: any) => (
-    <div data-testid="step-indicator">
-        Step {props.currentStep} of {props.totalSteps}
-    </div>
-));
+jest.mock('../../molecules/StepIndicator/stepIndicator.tsx', () => {
+    const MockStepIndicator = (props: any) => (
+        <div data-testid="step-indicator">
+            Step {props.currentStep} of {props.totalSteps}
+        </div>
+    );
+    MockStepIndicator.displayName = 'MockStepIndicator';
+    return MockStepIndicator;
+});
 
 // Mock zod schema
 jest.mock('../../../schemas/CreateCertificate/createCertificateSchemas.ts', () => {
+    // eslint-disable-next-line @typescript-eslint/no-require-imports
     const z = require('zod');
     return {
         step2Schema: z.object({

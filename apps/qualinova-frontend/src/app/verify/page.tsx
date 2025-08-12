@@ -4,9 +4,8 @@ import React, { useState } from 'react';
 import VerifyWithId from '@/components/organisms/Verify/VerifyWithId/verifyWithId';
 import VerifyWithQr from '@/components/organisms/Verify/VerifyWithQr/verifyWithQr';
 
-const page = () => {
-    const //
-        [currentPanel, setCurrentPanel] = useState('verify');
+const Page = () => {
+    const [currentPanel, setCurrentPanel] = useState('verify');
 
     return (
         <div className="flex md:h-screen *:mt-14 flex-col items-center ">
@@ -53,4 +52,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

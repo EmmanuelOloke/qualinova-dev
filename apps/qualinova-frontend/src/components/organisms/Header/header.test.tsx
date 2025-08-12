@@ -3,20 +3,6 @@ import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Header from '@/components/organisms/Header/header';
 
-// Mock Next.js Image component
-jest.mock('next/image', () => ({
-    __esModule: true,
-    default: ({ src, alt, className, fill }: any) => (
-        <img
-            src={src}
-            alt={alt}
-            className={className}
-            data-testid="header-logo"
-            style={fill ? { position: 'relative' } : {}}
-        />
-    ),
-}));
-
 // Mock NavMenu component
 jest.mock('../../molecules/NavMenu/navMenu.tsx', () => {
     return function MockNavMenu() {

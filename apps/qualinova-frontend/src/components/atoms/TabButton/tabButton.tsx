@@ -8,7 +8,6 @@ interface TabButtonProps {
 }
 
 const TabButton = ({
-    id,
     label,
     isActive,
     onClick,

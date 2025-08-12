@@ -3,7 +3,6 @@
 import { render, screen, fireEvent } from '@testing-library/react';
 
 import ThirdStepForm from './thirdStepForm';
-import { CreateCertificateProvider } from '@/contexts/createCertificateContext';
 
 const mockSetStep = jest.fn();
 

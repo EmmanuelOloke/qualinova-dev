@@ -101,8 +101,9 @@ jest.mock('react-hook-form', () => {
 // Global jest mock for Next Image
 jest.mock('next/image', () => ({
     __esModule: true,
-    default: ({ src, alt, ...props }: any) => {
-        return React.createElement('img', { src, alt, ...props });
+    default: ({ src, alt, fill, ...props }: any) => {
+        // The fill prop is intentionally excluded from imgProps to prevent DOM warnings
+        return React.createElement('img', { src, alt, fill, ...props });
     },
 }));
 

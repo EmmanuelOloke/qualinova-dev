@@ -4,14 +4,6 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import VerifyWithQr from './verifyWithQr';
 
-// Mock next/image since it's used in the component
-jest.mock('next/image', () => ({
-    __esModule: true,
-    default: (props: any) => {
-        return <img {...props} />;
-    },
-}));
-
 describe('VerifyWithQr Component', () => {
     const user = userEvent.setup();
 

@@ -26,7 +26,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                     src="https://www.googletagmanager.com/gtag/js?id=G-GX26MM78LB"
                     strategy="afterInteractive"
                 />
-                <Script>
+                <Script id="google-tag-manager" strategy="afterInteractive">
                     {`
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}

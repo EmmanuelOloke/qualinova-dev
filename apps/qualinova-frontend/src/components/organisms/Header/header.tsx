@@ -10,7 +10,13 @@ const Header = () => {
             <div className="flex flex-col w-full max-w-[75%] py-4">
                 <div className="flex flex-col md:flex-row items-center w-full">
                     <div className="h-10 w-36">
-                        <Image src="/logo.svg" className="!relative" alt="logo" fill />
+                        <Image
+                            src="/logo.svg"
+                            className="!relative"
+                            alt="logo"
+                            fill
+                            data-testid="header-logo"
+                        />
                     </div>
                     <NavMenu />
                 </div>

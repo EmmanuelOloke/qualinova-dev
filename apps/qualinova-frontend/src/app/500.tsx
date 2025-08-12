@@ -6,7 +6,7 @@ export default function ServerError() {
         <div className="flex flex-col items-center justify-center min-h-[60vh] px-4">
             <h1 className="text-4xl font-bold text-white mb-4">500 - Server Error</h1>
             <p className="text-gray-400 mb-8 text-center max-w-md">
-                Something went wrong on our end. We're working to fix the issue.
+                Something went wrong on our end. We&apos;re working to fix the issue.
             </p>
             <Link
                 href="/"
