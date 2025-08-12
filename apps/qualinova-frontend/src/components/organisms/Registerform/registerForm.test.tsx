@@ -12,20 +12,14 @@ jest.mock("next/navigation", () => ({
   }),
 }));
 
-// Mock next/image as it's a Next.js component
-jest.mock('next/image', () => ({
-  __esModule: true,
-  default: (props: any) => <img {...props} />,
-}));
-
 // Mock Next.js Link component
 jest.mock("next/link", () => ({
   __esModule: true,
   default: ({ children, href, className }: any) => {
     const onClick = (e: React.MouseEvent) => {
       e.preventDefault();
-      const router = require('next/navigation').useRouter();
-      router.push(href);
+      // Use the mocked router directly since it's already mocked above
+      mockPush(href);
     };
 
     return (
@@ -40,48 +34,6 @@ jest.mock("next/link", () => ({
     );
   },
 }));
-
-// Mock react-hook-form
-jest.mock('react-hook-form', () => {
-    let formData: { [key: string]: string | boolean } = {
-        firstName: '',
-        lastName: '',
-        email: '',
-        password: '',
-        terms: false,
-    }
-
-    let formErrors = {};
-
-  return {
-    useForm: () => ({
-      register: (name: string) => ({
-        onChange: (e: { target: { value: string; checked?: boolean; type?: string } }) => {
-          if (e.target.type === 'checkbox') {
-            formData[name] = e.target.checked ? true : false;
-          } else {
-            formData[name] = e.target.value;
-          }
-        },
-        onBlur: () => {},
-        name,
-        ref: () => {}
-      }),
-      handleSubmit: (cb: any) => (e: any) => {
-        e?.preventDefault?.();
-        cb(formData);
-      },
-      formState: {
-        errors: formErrors,
-        isValid: true,
-      },
-      // Helper function to set errors in tests
-      __setErrors: (errors: any) => {
-        formErrors = errors;
-      }
-    }),
-  };
-});
 
 // Mock Input component
 jest.mock("../../atoms/Input/input.tsx", () => {
@@ -191,6 +143,19 @@ describe('RegisterForm', () => {
 
   it('handles form submission with valid data', async () => {
     const consoleSpy = jest.spyOn(console, 'log').mockImplementation();
+    
+    // Reset form state before test
+    const { useForm } = await import('react-hook-form');
+    const mockForm = (useForm as jest.Mock)();
+    mockForm.__reset();
+    mockForm.__setFormData({
+      firstName: 'John',
+      lastName: 'Doe',
+      email: 'test@example.com',
+      password: 'Password123!',
+      terms: true,
+    });
+    
     render(<RegisterForm />);
 
     await user.type(screen.getByTestId('first-name-input'), 'John');
@@ -215,14 +180,16 @@ describe('RegisterForm', () => {
   });
 
   it('validates form fields and shows error messages', async () => {
-    const mockUseForm = require('react-hook-form').useForm();
-      mockUseForm.__setErrors({
-        firstName: { message: "First name must be at least 2 characters" },
-        lastName: { message: "Last name must be at least 2 characters" },
-        email: { message: "Invalid email format" },
-        password: { message: "Password must be at least 8 characters long" },
-        terms: { message: "You must accept the terms" }
-      });
+    const { useForm } = await import('react-hook-form');
+    const mockForm = (useForm as jest.Mock)();
+    mockForm.__setErrors({
+      firstName: { message: "First name must be at least 2 characters" },
+      lastName: { message: "Last name must be at least 2 characters" },
+      email: { message: "Invalid email format" },
+      password: { message: "Password must be at least 8 characters long" },
+      terms: { message: "You must accept the terms" }
+    });
+    
     render(<RegisterForm />);
     
     // Submit empty form
@@ -260,8 +227,16 @@ describe('RegisterForm', () => {
   });
 
   it('enables navigation to login page', async () => {
-    const mockRouter = { push: mockPush };
-    jest.spyOn(require('next/navigation'), 'useRouter').mockReturnValue(mockRouter);
+    const mockRouter = { 
+      push: mockPush,
+      back: jest.fn(),
+      forward: jest.fn(),
+      refresh: jest.fn(),
+      replace: jest.fn(),
+      prefetch: jest.fn(),
+    };
+    const navigation = await import('next/navigation');
+    jest.spyOn(navigation, 'useRouter').mockReturnValue(mockRouter as any);
   
     render(<RegisterForm />);
 

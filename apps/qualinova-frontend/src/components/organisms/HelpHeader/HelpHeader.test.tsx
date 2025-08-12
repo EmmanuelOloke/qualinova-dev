@@ -7,6 +7,7 @@ describe("HelpHeader", () => {
   const defaultProps = {
     title: "Test Help Center",
     subtitle: "Test subtitle description",
+    placeholderText: "Buscar en la ayuda...",
   };
 
   it("renders title and subtitle correctly", () => {

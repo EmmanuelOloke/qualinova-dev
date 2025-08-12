@@ -5,9 +5,9 @@ import { CategoryFilter } from "./CategoryFilter";
 
 describe("CategoryFilter", () => {
   const mockCategories = [
-    { id: "all", label: "All Categories", icon: "📋" },
-    { id: "certs", label: "Certificates", icon: "📜" },
-    { id: "verify", label: "Verification", icon: "✅" },
+    { id: "all", label: "All Categories", icon: () => <div>📋</div> },
+    { id: "certs", label: "Certificates", icon: () => <div>📜</div> },
+    { id: "verify", label: "Verification", icon: () => <div>✅</div> },
   ];
 
   it("renders all categories", () => {
@@ -48,7 +48,7 @@ describe("CategoryFilter", () => {
     );
 
     expect(screen.getByText("Certificates").closest("button")).toHaveClass(
-      "bg-blue-600"
+      "bg-[#2563EB]", "text-[#0F172A]"
     );
   });
 

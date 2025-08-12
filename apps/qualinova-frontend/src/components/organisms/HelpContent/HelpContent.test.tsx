@@ -18,8 +18,8 @@ describe("HelpContent", () => {
   ];
 
   const mockCategories = [
-    { id: "all", label: "All" },
-    { id: "test", label: "Test" },
+    { id: "all", label: "All", icon: () => <div>All icon</div> },
+    { id: "test", label: "Test", icon: () => <div>Test icon</div> },
   ];
 
   it("renders tab navigation", () => {
